@@ -1,0 +1,94 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int arr[6];
+int n = 6;
+int top = -1;
+
+void insert() {
+    int ele;
+    cout<<"Enter element to insert :- ";
+    cin>>ele;
+    
+    if(top >= n - 1) {
+        cout<<"stack is overflowed !!"<<endl;
+        return;
+    }
+    else {
+        top++;
+        arr[top] = ele;
+        cout<<ele<<" is inserted into the stack !!"<<endl;
+    }
+}
+
+void display() {
+    if(top == -1) {
+        cout<<"nothing to display !!"<<endl;
+        return;
+    }
+    else {
+        cout<<"stack elements are :- ";
+        int temp = top;
+        while(temp != -1) {
+            cout<<arr[temp]<<" ";
+            temp--;
+        }   
+        cout<<endl;
+    }
+}
+
+void deleteEle() {
+    if(top == -1) {
+        cout<<"nothing to delete !!"<<endl;
+        return;
+    }
+    else {
+        top--;
+        cout<<"top element deleted successfully !!"<<endl;
+    }
+}
+
+void getTopEle() {
+    if(top == -1) {
+        cout<<"stack is empty !!"<<endl;
+        return;
+    }
+    else {
+        cout<<"top element is :- "<<arr[top]<<endl;
+    }
+}
+
+int main() {
+    
+    int choice = 0;
+    
+    while(choice != 5) {
+        cout<<"what do you want to do ?"<<endl;
+        cout<<"Insert  - PRESS 1"<<endl;
+        cout<<"Display - PRESS 2"<<endl;
+        cout<<"Delete  - PRESS 3"<<endl;
+        cout<<"Top Ele - PRESS 4"<<endl;
+        cout<<"PRESS 5 to stop !!"<<endl;
+        cout<<"====> ";
+        cin>>choice;
+        
+        switch(choice) {
+            case 1:
+                insert();
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                deleteEle();
+                break;
+            case 4:
+                getTopEle();
+                break;
+            default:
+                break;
+        }
+    }
+    
+    return 0;
+}
