@@ -1,6 +1,6 @@
 class Solution {
 public:
-    char solve(vector<char> &temp, char oprtr) {
+    char solve(vector<char> &temp, char oprtr) { //fun will return 't' or 'f'
         if(oprtr == '!') {
             return temp[0] == 't' ? 'f' : 't';
         }
@@ -34,17 +34,17 @@ public:
             }
             else if(expression[i] == ')') {
                 vector<char> temp;
-                while(st.top() != '(') {
-                    temp.push_back(st.top());
+                while(st.top() != '(') { //pop while top is != (
+                    temp.push_back(st.top()); //store all operands on temp
                     st.pop();
                 }
-                st.pop();
-                char oprtr = st.top();
-                st.pop();
-                st.push(solve(temp, oprtr));
+                st.pop(); //pop ( from top
+                char oprtr = st.top(); //store operator from top
+                st.pop(); //pop that operator
+                st.push(solve(temp, oprtr)); //push the calculation result
             }
             else {
-                st.push(expression[i]);
+                st.push(expression[i]); //if not 'dot' nor '(', push it
             }
         }
 
