@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        stack<int> st;
+
+        for(int &ele: asteroids) {
+            while(!st.empty() && st.top() > 0 && ele < 0) {
+                int absEle = abs(ele);
+
+                //if both elemenst are equal
+                if(absEle == st.top()) {
+                    st.pop();
+                    ele = 0; //ele is set to 0, so that while loop should stop for specific ele
+                    break;
+                }
+                //if st.top() element is smaller
+                else if(st.top() < absEle) {
+                    st.pop();
+                }
+                else if(st.top() > absEle) {
+                    ele = 0; //ele is set to 0, so that while loop should stop for specific ele
+                    break;
+                }
+            }
+            
+            //if specific ele is not set to 0, then it should pushed into the stack
+            if(ele != 0) {
+                st.push(ele);
+            }
+        }
+
+        //populating result from backward, so the result should in require order, and not in reversed order
+        int n = st.size();
+        vector<int> result(n);
+        int i = n - 1;
+        while(!st.empty()) {
+            result[i] = st.top();
+            st.pop();
+            i--;
+        }
+
+        return result;
+    }
+};
