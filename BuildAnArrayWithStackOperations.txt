@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<string> buildArray(vector<int>& target, int n) {
+        int data = 1;
+        vector<string> result;
+
+        for(int &ele: target) {
+            while(data < ele) {
+                result.push_back("Push");
+                result.push_back("Pop");
+                data++;
+            }
+            result.push_back("Push");
+            data++;
+        }
+
+        return result;
+    }
+};
