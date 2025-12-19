@@ -1,0 +1,47 @@
+//approach - 1 - time complexity - O(n), space complexity - O(n) 
+// class Solution {
+// public:
+//     int minSwaps(string s) {
+//         stack<char> st;
+
+//         for(char &ch: s) {
+//             if(ch == '[') {
+//                 st.push(ch);
+//             }
+//             else if(ch == ']') {
+//                 if(!st.empty() && st.top() == '[') {
+//                     st.pop();
+//                 }
+//                 else {
+//                     st.push(ch);
+//                 }
+//             }
+//         }
+        
+//         int unmatchedPairs = st.size() / 2;  //most important logic of the code
+//         return (unmatchedPairs + 1) / 2;     //most important logic of the code
+//     }
+// };
+
+
+
+//approach - 2 - time complexity - O(n), space complexity - O(1)
+class Solution {
+public:
+    int minSwaps(string s) {
+        int tempStackSize = 0;
+
+        for(char &ch: s) {
+            if(ch == '[') {
+                tempStackSize++;
+            }
+            else {
+                if(tempStackSize > 0) {
+                    tempStackSize--;
+                }
+            }
+        }
+
+        return (tempStackSize + 1) / 2; //most important logic of the code
+    }
+};
