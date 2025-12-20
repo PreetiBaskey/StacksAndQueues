@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minimumDeletions(string s) {
+        int result = 0;
+        stack<char> st;
+
+        for(char &ch: s) {
+            if(ch == 'a' && !st.empty() && st.top() == 'b') {
+                st.pop();
+                result++;
+            }
+            else {
+                st.push(ch);
+            }
+        }
+
+        return result;
+    }
+};
