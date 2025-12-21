@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        stack<int> st;
+        int result = 0;
+
+        for(int &num: nums) {
+            while(!st.empty() && num < st.top()) { //pop while num is less than st.top() and st not empty
+                st.pop();
+            }
+            if(st.empty() || num > st.top()) { //if st.top() not 0, then do result++, otherwise ignore it
+                st.push(num);
+                if(st.top() != 0) {
+                    result++;
+                }
+            }
+        }
+
+        return result;
+    } 
+};
