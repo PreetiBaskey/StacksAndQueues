@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string reverseParentheses(string s) {
+        stack<char> st;
+
+        for(char &ch: s) {
+            if(ch != ')') { //if not ), simply push into the stack
+                st.push(ch);
+            }
+            else { //if ), take out ele from stack till st.top() != (
+                string temp = "";
+                while(st.top() != '(') {
+                    temp.push_back(st.top());
+                    st.pop();
+                }
+                st.pop(); //got ( on top of stack, now pop it 
+                for(char &c: temp) {
+                    st.push(c); //push back all the element of temp string
+                }
+            }
+        }
+
+        //store all stack element on result string
+        string result = "";
+        while(!st.empty()) {
+            result.push_back(st.top());
+            st.pop();
+        }
+
+        //reverse the result string and return the result
+        reverse(result.begin(), result.end());
+
+        return result;
+    }
+};
