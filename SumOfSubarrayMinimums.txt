@@ -1,0 +1,66 @@
+class Solution {
+public:
+    vector<int> getNSL(vector<int> &arr, int n) {
+         vector<int> result(n);
+         stack<int> st;
+
+         for(int i = 0; i < n; i++) {
+            if(st.empty()) { //if true, means there is no smallest element for particular element
+                result[i] = -1; 
+            }
+            else {
+                while(!st.empty() && arr[st.top()] >= arr[i]) {
+                    st.pop(); //if greater element, pop it because we are looking for smallest element
+                }
+                result[i] = st.empty() ? -1 : st.top(); //if not greter, than push into result
+            }
+
+            st.push(i);
+         }
+
+         return result;
+    }
+
+    vector<int> getNSR(vector<int> &arr, int n) {
+         vector<int> result(n);
+         stack<int> st;
+
+         for(int i = n - 1; i >= 0; i--) {
+            if(st.empty()) {
+                result[i] = n;
+            }
+            else {
+                while(!st.empty() && arr[st.top()] > arr[i]) {
+                    st.pop();
+                }
+                result[i] = st.empty() ? n : st.top();
+            }
+
+            st.push(i);
+         }
+
+         return result;
+    }
+
+    int sumSubarrayMins(vector<int>& arr) {
+        int n = arr.size();
+
+        vector<int> NSL = getNSL(arr, n); //find next smallest element in left for all array items
+        vector<int> NSR = getNSR(arr, n); //find next smallest element in right for all array items
+
+        long long sum = 0;
+        int MOD = 1e9 + 7; //in question, asked for mod, because the answer can be bigger
+
+        for(int i = 0; i < n; i++) {
+            long long ls = i - NSL[i]; //each element's left smaller
+            long long rs = NSR[i] - i; //each element's right smaller
+
+            long long totalWays = ls * rs; //multiply both to get totalways
+            long long totalSum = arr[i] * totalWays; //multiply with particular arr[i] to get total sum , that is array element * totalways
+
+            sum = (sum + totalSum) % MOD;
+        }
+
+        return sum;
+    }
+};
