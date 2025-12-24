@@ -1,0 +1,97 @@
+//approach - 1
+// class Solution {
+// public:
+//     string minRemoveToMakeValid(string s) {
+//         string result = "";
+//         int n = s.length();
+//         stack<int> st;
+//         unordered_set<int> uSet;
+
+//         for(int i = 0; i < n; i++) {
+//             if(s[i] == '(') {
+//                 st.push(i);
+//             }
+//             else if(s[i] == ')') {
+//                 if(!st.empty()) {
+//                     st.pop();
+//                 }
+//                 else {
+//                     uSet.insert(i);
+//                 }
+//             }
+//         }
+
+//         if(!st.empty()) {
+//             while(!st.empty()) {
+//                 uSet.insert(st.top());
+//                 st.pop();
+//             }
+//         }
+
+//         for(int j = 0; j < n; j++) {
+//             if(uSet.find(j) == uSet.end()) {
+//                 result.push_back(s[j]);
+//             }
+//         }
+
+//         return result;
+
+//     }
+//     };
+
+
+//approach - 2
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        string result = "";
+      
+        //first pass      
+        int open = 0;
+        for(char &ch: s) {
+            if(ch == ')') {
+                if(open > 0) {
+                    open--;
+                    result.push_back(ch);
+                }
+                else {
+                    ch = 0;
+                }
+            }
+            else  if(ch == '(') {
+                open++;
+                result.push_back(ch);
+            }
+            else {
+                result.push_back(ch);
+            }
+        }
+
+        //second pass
+        int close = 0;
+        int n = result.size();
+        string updatedResult = "";
+        for(int i = n - 1; i >= 0; i--) {
+            if(result[i] == '(') {
+                if(close > 0) {
+                    close--;
+                    updatedResult.push_back(result[i]);
+                }
+                else {
+                    continue;
+                }
+            }
+            else  if(result[i] == ')') {
+                close++;
+                updatedResult.push_back(result[i]);
+            }
+            else {
+                updatedResult.push_back(result[i]);
+            }
+        }
+
+        reverse(updatedResult.begin(), updatedResult.end());
+
+        return updatedResult;
+    }
+};
