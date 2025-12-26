@@ -1,0 +1,58 @@
+//approach - 1 - time complexity - O(nlogn), space complexity - O(logn)
+// class Solution {
+// public:
+//     vector<int> deckRevealedIncreasing(vector<int>& deck) {
+//         int n = deck.size();
+//         vector<int> result(n, 0);
+
+//         int i = 0; //deck element iterator
+//         int j = 0; //result element iterator
+//         bool skip = false;
+
+//         sort(deck.begin(), deck.end());
+
+//         while(i < n) {
+//             if(result[j] == 0) {
+//                 if(skip == false) {
+//                     result[j] = deck[i];
+//                     i++;
+//                 }
+//                 skip = !skip;
+//             }
+//             j = (j + 1) % n;
+//         }
+
+//         return result;                                   
+//     }
+// };
+
+
+
+//appraoch - 2 - time complexity - O(nlogn), space complexity - O(n)
+class Solution {
+public:
+    vector<int> deckRevealedIncreasing(vector<int>& deck) {
+        int n = deck.size();
+        vector<int> result(n, 0);
+        queue<int> q; //to store indices of deck element
+
+        sort(deck.begin(), deck.end()); //sort the deck vector/array
+
+        for(int i = 0; i < n; i++) { //storing indices of deck element
+            q.push(i);
+        }
+
+        for(int i = 0; i < n; i++) {
+            int frontIndex = q.front(); //pop index and store in result-result[frontIndex]
+            q.pop();
+
+            int secondFrontIndex = q.front(); //pop second last index and again push into the queue(q)
+            q.pop();
+            q.push(secondFrontIndex);
+
+            result[frontIndex] = deck[i]; //store int deck[i] = result[frontIndex] 
+        }
+
+        return result; //return result                                   
+    }
+};
